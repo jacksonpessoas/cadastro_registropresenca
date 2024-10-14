@@ -8,57 +8,49 @@
 <body>
     <h1>Cadastrar Liderança</h1>
     <form id="formLideranca">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" required><br><br>
-
-        <label for="contato">Contato:</label>
-        <input type="text" id="contato" required><br><br>
-
-        <label for="endereco">Endereço:</label>
-        <input type="text" id="endereco" required><br><br>
-
-        <label for="rg">RG:</label>
-        <input type="text" id="rg" required><br><br>
-
-        <label for="cpf">CPF:</label>
-        <input type="text" id="cpf" required><br><br>
-
-        <label for="titulo">Título:</label>
-        <input type="text" id="titulo" required><br><br>
-
-        <label for="zona">Zona:</label>
-        <input type="text" id="zona" required><br><br>
-
-        <label for="secao">Seção:</label>
-        <input type="text" id="secao" required><br><br>
-
-        <button type="button" onclick="enviarDadosLideranca()">Cadastrar</button>
+        Nome: <input type="text" id="nome" required><br>
+        Endereço: <input type="text" id="endereco" required><br>
+        Contato: <input type="text" id="contato" required><br>
+        RG: <input type="text" id="rg" required><br>
+        CPF: <input type="text" id="cpf" required><br>
+        Título: <input type="text" id="titulo" required><br>
+        Zona: <input type="text" id="zona" required><br>
+        Seção: <input type="text" id="secao" required><br>
+        <button type="button" onclick="enviarDados()">Enviar</button>
     </form>
 
     <script>
-        function enviarDadosLideranca() {
-            var lideranca = {
-                nome: document.getElementById("nome").value,
-                contato: document.getElementById("contato").value,
-                endereco: document.getElementById("endereco").value,
-                rg: document.getElementById("rg").value,
-                cpf: document.getElementById("cpf").value,
-                titulo: document.getElementById("titulo").value,
-                zona: document.getElementById("zona").value,
-                secao: document.getElementById("secao").value,
-                funcao: "Liderança"
+        function enviarDados() {
+            var nome = document.getElementById("nome").value;
+            var endereco = document.getElementById("endereco").value;
+            var contato = document.getElementById("contato").value;
+            var rg = document.getElementById("rg").value;
+            var cpf = document.getElementById("cpf").value;
+            var titulo = document.getElementById("titulo").value;
+            var zona = document.getElementById("zona").value;
+            var secao = document.getElementById("secao").value;
+
+            var dados = {
+                nome: nome,
+                endereco: endereco,
+                contato: contato,
+                rg: rg,
+                cpf: cpf,
+                titulo: titulo,
+                zona: zona,
+                secao: secao
             };
 
-            fetch('https://script.google.com/macros/s/AKfycbyRiUPBec9iE1ZlIV96NNIc3CJMyQaPw1h1xSTfOb7L9GEDqLcCUi3BHX0O2mv8y67X/execPT', {
+            fetch('https://script.google.com/macros/s/AKfycbxpxnOzsOsDEhaS8qzBNhe3mw422FwziF7bgAyVz6SNne2JsuA33rl8QmU2PLq9VX5ZJg/exec', {
                 method: 'POST',
-                body: JSON.stringify(lideranca),
+                body: JSON.stringify(dados),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
             .then(response => response.text())
-            .then(data => alert("Liderança cadastrada com sucesso!"))
-            .catch(error => console.error("Erro ao cadastrar liderança: ", error));
+            .then(data => alert("Dados enviados com sucesso!"))
+            .catch(error => console.error("Erro ao enviar os dados:", error));
         }
     </script>
 </body>
