@@ -1,39 +1,62 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    
-    <title>Registro de Presença</title>
-   
+    <title>Registrar Presença</title>
 </head>
 <body>
+    <h1>Registrar Presença</h1>
+    <form id="formPresenca">
+        <label for="nome">Nome:</label>
+        <select id="nome" required></select><br><br>
 
-<h2>Registro de Presença</h2>
+        <label for="data">Data:</label>
+        <input type="date" id="data" required><br><br>
 
-<form id="presencaForm">
-    <label for="nome">Nome:</label>
-    <input type="text" id="nome" name="nome" required>
+        <button type="button" onclick="registrarPresenca()">Registrar Presença</button>
+    </form>
 
-    <button type="submit">Registrar Presença</button>
-</form>
+    <script>
+        // Função para carregar os nomes com função (Liderança ou Colaborador)
+        function carregarNomes() {
+            fetch('https://script.google.com/macros/s/AKfycbyRiUPBec9iE1ZlIV96NNIc3CJMyQaPw1h1xSTfOb7L9GEDqLcCUi3BHX0O2mv8y67X/exec')  // Pega os dados de colaboradores e liderança
+                .then(response => response.json())
+                .then(data => {
+                    let selectNome = document.getElementById('nome');
+                    data.forEach(pessoa => {
+                        let option = document.createElement('option');
+                        option.value = pessoa.nome;
+                        option.text = pessoa.nome + " (" + pessoa.funcao + ")";
+                        selectNome.add(option);
+                    });
+                })
+                .catch(error => console.error('Erro ao carregar nomes: ', error));
+        }
 
-<script>
-    document.getElementById('presencaForm').addEventListener('submit', function(event) {
-        event.preventDefault();
+        function registrarPresenca() {
+            var presenca = {
+                nome: document.getElementById("nome").value,
+                data: document.getElementById("data").value
+            };
 
-        const nome = document.getElementById('nome').value;
+            fetch('LINK_DO_APP_SCRIPT', {
+                method: 'POST',
+                body: JSON.stringify(presenca),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.text())
+            .then(data => alert("Presença registrada com sucesso!"))
+            .catch(error => console.error("Erro ao registrar presença: ", error));
+        }
 
-        fetch('https://script.google.com/macros/s/AKfycbw5dsl9aPZujjcqrrQ_eqy4FydvfOFKTzubHZnXaeFCGdAf8jRqITYppQGGm9BhV_c2/exec', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nome })
-        }).then(response => response.text())
-          .then(data => alert(data))
-          .catch(error => console.error('Erro ao registrar presença:', error));
-    });
-</script>
+        // Carrega os nomes ao carregar a página
+        window.onload = carregarNomes;
 
+        // Define a data atual no campo data
+        document.getElementById("data").valueAsDate = new Date();
+    </script>
 </body>
 </html>
