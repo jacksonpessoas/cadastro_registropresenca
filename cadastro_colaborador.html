@@ -73,6 +73,7 @@
 
             fetch('https://script.google.com/macros/s/AKfycbwI0Z72WBiPpVz_meJ3yWu2QsXfAE1XL4wgEIsSt_QvFDAD933MGO_RPCUMHKi7o4X-mA/exec', {
                 method: 'POST',
+                mode: 'no-cors',  // Usando modo no-cors
                 body: JSON.stringify(colaborador),
                 headers: {
                     'Content-Type': 'application/json'
