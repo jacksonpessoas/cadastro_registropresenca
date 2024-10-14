@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    
+    <title>Registro de Presença</title>
+   
+</head>
+<body>
+
+<h2>Registro de Presença</h2>
+
+<form id="presencaForm">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" required>
+
+    <button type="submit">Registrar Presença</button>
+</form>
+
+<script>
+    document.getElementById('presencaForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const nome = document.getElementById('nome').value;
+
+        fetch('https://script.google.com/macros/s/AKfycbw5dsl9aPZujjcqrrQ_eqy4FydvfOFKTzubHZnXaeFCGdAf8jRqITYppQGGm9BhV_c2/exec', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nome })
+        }).then(response => response.text())
+          .then(data => alert(data))
+          .catch(error => console.error('Erro ao registrar presença:', error));
+    });
+</script>
+
+</body>
+</html>
